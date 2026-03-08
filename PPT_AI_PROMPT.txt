@@ -1,0 +1,391 @@
+=====================================================================
+  JANSAATHI — AI FOR BHARAT HACKATHON (AWS) — PPT GENERATION PROMPT
+=====================================================================
+
+Copy-paste the ENTIRE content below into NotebookLM, Gamma.app, Beautiful.ai, 
+Tome.app, SlidesAI, or ChatGPT/Claude for PPT generation.
+
+=====================================================================
+BEGIN PROMPT
+=====================================================================
+
+You are a professional presentation designer creating a **hackathon-winning pitch deck** for the "AI for Bharat Hackathon (AWS)". 
+
+Create a **10-slide presentation** with the EXACT content provided below. 
+
+## DESIGN INSTRUCTIONS
+
+**Theme:** Modern, clean, professional — Indian government tech aesthetic
+**Primary Color:** Deep Saffron (#FF6B35) or Indian Navy (#1A237E)
+**Accent Color:** Gold (#FFD700) — represents India's national color
+**Background:** White or very light gray (#F5F5F5)
+**Font:** Inter or Poppins (headings), Open Sans (body)
+**Style:** Use icons, diagrams, and visual blocks instead of bullet-heavy slides. Every slide MUST have a visual element — diagram, icon grid, table, or illustration. Minimal text, maximum impact.
+
+**Logo/Branding:** Use "🏛️ JanSaathi" as the project name/logo. Tagline: "Har Yojana, Har Naagrik" (Every Scheme, Every Citizen).
+
+---
+
+## SLIDE 1: BRIEF ABOUT THE IDEA
+
+**Title:** JanSaathi — AI-Powered Welfare Scheme Discovery for Every Indian Citizen
+**Subtitle:** Har Yojana, Har Naagrik | AI for Bharat Hackathon (AWS)
+
+**Content — lay this out as a problem-solution visual split:**
+
+LEFT SIDE — THE PROBLEM (use red/orange tones):
+- India has 700+ central government welfare schemes
+- 40% of eligible citizens never apply — they don't know schemes exist
+- Portals are in English, require forms, need digital literacy
+- No single platform answers: "Which schemes am I eligible for?"
+
+RIGHT SIDE — OUR SOLUTION (use green/blue tones):
+- JanSaathi is a Telegram AI chatbot
+- Citizens describe their situation in natural language (text or voice)
+- Supports 6 Indian languages: Hindi, Tamil, Telugu, Bengali, Marathi, English
+- Instantly returns top 5 matching schemes with benefits and application links
+
+BOTTOM — EXAMPLE INTERACTION (show as a chat bubble mockup):
+User says: "मैं UP का किसान हूं, 45 साल, 2 एकड़ जमीन है"
+Bot replies: "आपके लिए 3 योजनाएं मिलीं: PM-KISAN (₹6,000/yr), Fasal Bima (₹2L insurance), Kisan Credit Card (₹3L credit)"
+
+ADD a visual: A simple illustration of a farmer holding a phone with scheme cards appearing on screen.
+
+---
+
+## SLIDE 2: WHY AI + HOW AWS + WHAT VALUE
+
+**Title:** AI + AWS: The Intelligence Layer
+
+**Content — create THREE COLUMNS:**
+
+COLUMN 1 — WHY AI IS REQUIRED (brain icon):
+- Users don't fill forms — they TALK. AI (Bedrock Claude 3 Haiku) parses natural language like "garib hoon, BPL card hai" into structured data: {bpl_card: true}
+- 300M+ Indians are low-literacy — voice input via Whisper AI enables the illiterate to access welfare
+- Sentiment detection (Comprehend) adapts the bot's tone when users are frustrated or distressed
+- Intelligent relevance scoring ranks the best schemes from 20+ eligibility parameters
+
+COLUMN 2 — HOW AWS SERVICES ARE USED (AWS logo icon):
+Show as a TABLE or icon grid:
+| AWS Service | Role |
+| Amazon Bedrock (Claude 3 Haiku) | Primary LLM — profile extraction + response generation |
+| Amazon Transcribe | Speech-to-text for 6 Indian languages |
+| Amazon Translate | Real-time translation between 6 languages |
+| Amazon Comprehend | Sentiment analysis + entity extraction |
+| Amazon Polly (Kajal Neural) | Text-to-speech voice replies in Hindi/English |
+| Amazon DynamoDB | Serverless database for user profiles + schemes |
+| Amazon S3 | Audio file storage for voice pipeline |
+| Amazon SNS | Proactive scheme alerts & deadline reminders |
+| Amazon OpenSearch Serverless | RAG vector store for semantic search |
+
+COLUMN 3 — WHAT VALUE AI ADDS (chart icon):
+Show as a BEFORE/AFTER comparison:
+WITHOUT AI: User visits 5+ websites → reads 100-page guidelines → needs English → manually checks eligibility → no follow-up
+WITH AI (JanSaathi): 1 message → 5 matched schemes in 3 seconds → any of 6 languages → auto profile extraction → proactive reminders
+RESULT: 10x faster, 6x more languages, zero literacy barrier
+
+---
+
+## SLIDE 3: LIST OF FEATURES
+
+**Title:** Feature Showcase
+
+**Content — show as a 2x5 ICON GRID (each feature as a card with icon + title + 1-line description):**
+
+1. 🤖 AI Scheme Matching — Extracts age, occupation, state, income, caste from conversation; ranks top 5 schemes by relevance score
+2. 🌐 6 Indian Languages — Hindi, Tamil, Telugu, Marathi, Bengali, English via AWS Translate; users speak in mother tongue
+3. 🎤 Voice-First Input — Send voice notes on Telegram; instant transcription via Groq Whisper + AWS Transcribe fallback
+4. 😊 Sentiment-Aware Bot — AWS Comprehend detects frustration; bot becomes more empathetic when user is distressed
+5. 🏛️ 20 Government Schemes — PM-KISAN, Ayushman Bharat, MGNREGA, Ujjwala, PM Awas, Mudra, Stand-Up India, Vishwakarma + more
+6. 🔊 Voice Replies — AWS Polly (Kajal neural voice) sends Hindi/English voice notes back to the user
+7. 🔔 Proactive Alerts — AWS SNS sends scheme deadline reminders and new scheme notifications
+8. 🛡️ Fault-Tolerant — Circuit breaker pattern; Bedrock→Groq fallback; Whisper→Transcribe fallback; zero downtime
+9. 📈 RAG Search — Retrieval-Augmented Generation via OpenSearch for semantically rich scheme answers
+10. 💬 Telegram Native — Zero app download; rich scheme cards with amounts, links, and application steps
+
+---
+
+## SLIDE 4: PROCESS FLOW DIAGRAM
+
+**Title:** How JanSaathi Works — End-to-End Flow
+
+**Content — create a FLOWCHART diagram with these steps (use colored boxes and arrows):**
+
+START → User sends message on Telegram
+
+BRANCH: Is it text or voice?
+
+TEXT PATH (blue boxes):
+1. AWS Translate — Detect Language
+2. AWS Translate — Convert to English
+3. AWS Comprehend — Analyze Sentiment
+4. AWS Bedrock (Claude 3 Haiku) — Extract User Profile (age, occupation, state, income, caste, BPL, etc.)
+5. DynamoDB — Match & Rank Schemes (relevance scoring algorithm)
+6. AWS Bedrock — Generate Personalized Response  
+7. AWS Translate — Translate back to user's language
+8. Send text response + scheme cards on Telegram
+
+VOICE PATH (green boxes):
+1. Download audio from Telegram
+2. Groq Whisper — Instant Transcription (primary)
+3. If fails → AWS S3 → AWS Transcribe (fallback)
+4. → Merges into Text Path at step 3 (Comprehend)
+
+OPTIONAL BRANCH (orange):
+5b. AWS Polly — Generate voice reply
+5c. Send voice note on Telegram
+
+END → User receives matched schemes in their language
+
+Also show a small USE CASE diagram with actors:
+- Citizen: Send text query, Send voice query, View schemes, Receive alerts
+- Admin: Seed scheme data, Monitor health
+
+---
+
+## SLIDE 5: WIREFRAMES / MOCK DIAGRAMS
+
+**Title:** User Experience — Telegram Chat Interface
+
+**Content — show 3-4 MOBILE PHONE MOCKUPS side by side:**
+
+MOCKUP 1 — WELCOME SCREEN:
+Show a Telegram chat with the JanSaathi bot welcome message:
+"🏛️ JanSaathi में आपका स्वागत है!"
+"Welcome to JanSaathi!"
+"मैं आपको सरकारी योजनाओं की जानकारी देने में मदद करूंगा"
+Commands shown: /start, /help, /myschemes
+Input box at bottom with microphone icon
+
+MOCKUP 2 — SCHEME RESULTS:
+User message bubble: "मैं UP का किसान हूं, 45 साल, 2 एकड़ जमीन"
+Bot reply: "आपके लिए 3 योजनाएं मिलीं!"
+Three scheme cards stacked:
+- 🏛️ PM-KISAN | ₹6,000/year | pmkisan.gov.in
+- 🏛️ PM Fasal Bima | Up to ₹2,00,000 | pmfby.gov.in  
+- 🏛️ Kisan Credit Card | Up to ₹3,00,000 | nabard.org
+
+MOCKUP 3 — VOICE INTERACTION:
+User sends voice message bubble (waveform icon, "0:05")
+Bot: "🎤 Processing your voice message..."
+Bot: "चिंता न करें! आपके लिए ये योजनाएं हैं:"
+Scheme cards for BPL user: Ayushman Bharat (₹5L health), PM Awas (₹1.2L housing), Ujjwala (free LPG)
+Bot sends voice reply (speaker icon)
+
+MOCKUP 4 — WEB DASHBOARD:
+Show the React web dashboard with:
+Header: "🏛️ JanSaathi | Chat | Dashboard"
+Stats bar: Total Schemes: 20, Languages: 6, Avg Response: 3s
+Category filters: Agriculture, Health, Education, Financial
+Grid of scheme cards
+
+---
+
+## SLIDE 6: ARCHITECTURE DIAGRAM
+
+**Title:** System Architecture — Cloud-Native on AWS
+
+**Content — create a LAYERED ARCHITECTURE DIAGRAM with 3 layers:**
+
+TOP LAYER — USER INTERFACE:
+- Telegram App (Text + Voice) — with phone icon
+- React Web Dashboard — with browser icon
+Both connect down to the Application Layer
+
+MIDDLE LAYER — APPLICATION SERVER:
+Large box: "Node.js Express Server (Port 3001)"
+Inside it, show service boxes:
+- Telegram Bot Handler
+- AI Service (Bedrock + Groq)
+- Scheme Service (Match + Score)
+- Translate Service
+- Transcribe Service (Whisper + AWS)
+- Comprehend Service
+- Polly Service
+- SNS Service
+- RAG Service (Vector Search)
+
+BOTTOM LAYER — AWS CLOUD SERVICES:
+Show 9 AWS service icons in a 3x3 grid:
+Row 1: Amazon Bedrock | Amazon Translate | Amazon Comprehend
+Row 2: Amazon Transcribe | Amazon Polly | Amazon SNS
+Row 3: Amazon DynamoDB | Amazon S3 | Amazon OpenSearch
+
+Draw arrows showing data flow between layers.
+
+Add callout boxes:
+- "9 AWS Services deeply integrated"
+- "Serverless-first: DynamoDB, OpenSearch, Bedrock"
+- "Dual-provider resilience: Bedrock↔Groq, Whisper↔Transcribe"
+- "Circuit breaker prevents cascading failures"
+
+---
+
+## SLIDE 7: TECHNOLOGIES UTILIZED
+
+**Title:** Technology Stack
+
+**Content — show as FOUR CATEGORY CARDS:**
+
+CARD 1 — AI / ML (brain icon, purple):
+- AWS Bedrock (Claude 3 Haiku) — LLM inference
+- Groq Whisper (whisper-large-v3) — Voice transcription
+- AWS Comprehend — Sentiment & entity analysis
+- RAG (OpenSearch) — Semantic search
+
+CARD 2 — AWS CLOUD (orange, AWS logo):
+- Amazon Bedrock, Transcribe, Translate, Polly
+- Amazon Comprehend, SNS
+- Amazon DynamoDB, S3, OpenSearch Serverless
+- Total: 9 AWS services
+
+CARD 3 — BACKEND (green, server icon):
+- Node.js 18+ (ES Modules)
+- Express.js — REST API
+- node-telegram-bot-api — Bot framework
+- AWS SDK v3 — All AWS integrations
+- Groq SDK — Fallback LLM
+
+CARD 4 — FRONTEND (blue, browser icon):
+- React 18 — Web dashboard
+- Tailwind CSS — Responsive styling
+- Vite — Build tool
+- React Router — Navigation
+
+Add a small row at bottom for DevOps:
+- Feature Flags (runtime toggle)
+- Circuit Breaker (fault tolerance)
+- dotenv (configuration)
+
+---
+
+## SLIDE 8: ESTIMATED IMPLEMENTATION COST
+
+**Title:** Cost Estimation — Affordable at Every Scale
+
+**Content — show as a TABLE + SCALING CHART:**
+
+AWS SERVICE COST TABLE (monthly, pay-as-you-go):
+| Service | Usage (1K users) | Monthly Cost |
+| Bedrock (Claude 3 Haiku) | 50K tokens/day | $15-25 |
+| DynamoDB | On-demand | $2-5 |
+| Translate | 500K chars/day | $8-12 |
+| Transcribe | 100 min/day | $3-5 |
+| S3 | 5 GB | $0.12 |
+| Polly (Neural) | 200K chars/day | $8-12 |
+| Comprehend | 50K units/mo | $3-5 |
+| SNS | 10K notifs/mo | $1 |
+| OpenSearch Serverless | 2 OCU | $35 |
+
+SCALING TIERS (show as a step chart or bar chart):
+- Prototype (50-100 users): $15-30/month
+- Pilot — 1 District (1,000 users): $75-100/month  
+- Scale — 1 State (50,000 users): $500-800/month
+- National (1M+ users): $3,000-5,000/month
+
+HIGHLIGHT BOX: "Cost per user: ₹2-5/month (less than an SMS)"
+
+COST-SAVING CALLOUTS:
+- Groq Whisper (free) saves ~60% on transcription
+- Bedrock→Groq fallback reduces LLM costs
+- S3 lifecycle auto-deletes audio after 24 hours
+- AWS Free Tier covers first 12 months
+
+---
+
+## SLIDE 9: PROTOTYPE PERFORMANCE REPORT
+
+**Title:** Performance Benchmarks — Working Prototype
+
+**Content — show as DASHBOARD-STYLE METRICS (big numbers + labels):**
+
+RESPONSE TIME METRICS (show as horizontal bar chart):
+- End-to-end text response: 3-5 seconds
+- End-to-end voice response: 4-7 seconds  
+- Language detection: <50ms
+- Translation: 200-400ms
+- Profile extraction (LLM): 1-2 seconds
+- Scheme matching: 100-300ms
+- Voice transcription (Whisper): 1-3 seconds
+- Sentiment analysis: 200-400ms
+
+ACCURACY METRICS (show as circular progress indicators):
+- Profile extraction: 85-90%
+- Scheme matching precision: 90%+
+- Language detection: 95%+
+- Voice transcription (Hindi): 90%+
+- Sentiment detection: 80%+
+
+RELIABILITY METRICS (show as status indicators):
+- Fallback coverage: 100% (Bedrock→Groq, Whisper→Transcribe)
+- Circuit breaker: 5 failures → 60s cooldown → auto-reset
+- Max retries: 3 per request (exponential backoff)
+
+SCHEME DATABASE (show as info cards):
+- 20 schemes across 8 categories
+- 12 eligibility parameters per scheme
+- Categories: Agriculture, Health, Education, Housing, Financial, Social, Energy
+
+---
+
+## SLIDE 10: FUTURE DEVELOPMENT
+
+**Title:** Roadmap — From Prototype to National Platform
+
+**Content — show as a TIMELINE with 4 phases:**
+
+PHASE 1 — ENHANCED DATA (Month 1-2) 🟢:
+- Expand to 200+ central government schemes
+- Add state-specific schemes for all 28 states + 8 UTs
+- Integrate with UMANG & MyScheme government APIs
+- Real-time scheme status tracking
+
+PHASE 2 — ADVANCED AI (Month 3-4) 🔵:
+- Document OCR: Upload Aadhaar/BPL card → auto-extract details (Amazon Textract)
+- Conversational memory: Multi-turn conversations
+- Personalized re-ranking from user feedback
+- Amazon Lex for structured dialog flows
+
+PHASE 3 — SCALE & DISTRIBUTION (Month 5-6) 🟣:
+- WhatsApp Business API integration (2B+ users)
+- IVR via Amazon Connect for feature phones (no internet needed)
+- PWA for offline-capable web version
+- Multi-region deployment (Mumbai, Hyderabad)
+
+PHASE 4 — GOVERNMENT INTEGRATION (Month 6+) 🟠:
+- Direct scheme application submission
+- Aadhaar eKYC verification
+- DigiLocker document management
+- Partnership with Common Service Centers (CSCs)
+
+IMPACT VISION BOX (at bottom, highlighted):
+"Target: 300M+ eligible but unaware beneficiaries"
+"Expand to all 22 scheduled languages"
+"Accessibility: Braille + screen reader support"
+
+CLOSING QUOTE:
+"Every Indian citizen who is eligible for a government welfare scheme should know about it, understand it in their own language, and be able to apply for it — regardless of literacy, language, or digital access."
+
+— Team JanSaathi
+
+=====================================================================
+END PROMPT
+=====================================================================
+
+INSTRUCTIONS FOR USE:
+1. Copy everything between BEGIN PROMPT and END PROMPT
+2. Paste into one of these tools:
+   - Gamma.app (best for visual slides) — paste as "Generate presentation"
+   - Tome.app — paste as new presentation prompt
+   - Beautiful.ai — use as content for each slide
+   - SlidesAI (Google Slides plugin) — paste as content
+   - ChatGPT / Claude — ask "Create a PowerPoint presentation with this content"
+   - NotebookLM — upload as a source, then ask to generate presentation
+   - Canva AI — use slide-by-slide content
+3. After generation, manually adjust:
+   - Add your team name and member names on Slide 1
+   - Add your real Telegram bot screenshot on Slide 5
+   - Adjust cost numbers based on your actual AWS bill
+   - Add your college/organization logo
+
+=====================================================================
