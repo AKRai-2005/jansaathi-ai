@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: jansaathi-backend
+    runtime: node
+    region: oregon
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: AWS_REGION
+        sync: false
+      - key: AWS_ACCESS_KEY_ID
+        sync: false
+      - key: AWS_SECRET_ACCESS_KEY
+        sync: false
+      - key: GROQ_API_KEY
+        sync: false
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: S3_BUCKET_NAME
+        sync: false
+      - key: FEATURE_FLAG_USE_BEDROCK
+        value: "true"
+      - key: FEATURE_FLAG_USE_RAG
+        value: "false"
+      - key: ENABLE_VOICE_RESPONSES
+        value: "false"
