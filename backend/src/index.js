@@ -40,7 +40,12 @@ async function initializeServices() {
 initializeServices();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+}));
 app.use(express.json());
 
 console.log('🏛️  JanSaathi Backend Server');
