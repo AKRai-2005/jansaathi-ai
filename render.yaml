@@ -21,6 +21,16 @@ services:
         sync: false
       - key: S3_BUCKET_NAME
         sync: false
+      - key: TELEGRAM_WEBHOOK_URL
+        fromService:
+          name: jansaathi-backend
+          type: web
+          property: host
+      - key: RENDER_EXTERNAL_URL
+        fromService:
+          name: jansaathi-backend
+          type: web
+          property: host
       - key: FEATURE_FLAG_USE_BEDROCK
         value: "true"
       - key: FEATURE_FLAG_USE_RAG

@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import http from 'http';
+import https from 'https';
 
 // Load environment variables FIRST before any other imports
 dotenv.config();
@@ -11,6 +13,7 @@ import translateService from './services/translateService.js';
 import ragService from './services/ragService.js';
 import indexingService from './services/indexingService.js';
 import JanSaathiBot from './bot/telegramBot.js';
+import webhookRouter, { setBotInstance } from './routes/webhook.js';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -23,6 +26,17 @@ async function initializeServices() {
   // Initialize Telegram Bot
   const telegramBot = new JanSaathiBot(process.env.TELEGRAM_BOT_TOKEN);
   telegramBot.initialize();
+
+  // Wire up webhook route for production
+  setBotInstance(telegramBot);
+
+  // In production, register webhook with Telegram
+  const isProduction = process.env.NODE_ENV === 'production';
+  if (isProduction && process.env.TELEGRAM_WEBHOOK_URL) {
+    const webhookUrl = `${process.env.TELEGRAM_WEBHOOK_URL}/api/webhook/telegram`;
+    await telegramBot.setWebhook(webhookUrl);
+    console.log(`🌐 Telegram webhook registered: ${webhookUrl}`);
+  }
 
   // Initialize RAG if enabled
   if (USE_RAG && process.env.OPENSEARCH_ENDPOINT) {
@@ -47,6 +61,9 @@ app.use(cors({
   credentials: true,
 }));
 app.use(express.json());
+
+// Telegram webhook route (must be before other routes)
+app.use('/api/webhook', webhookRouter);
 
 console.log('🏛️  JanSaathi Backend Server');
 console.log('============================\n');
@@ -306,11 +323,35 @@ app.delete('/api/rag/user/:userId', async (req, res) => {
   }
 });
 
+// Keep-alive self-ping (prevents Render free tier from sleeping)
+function startKeepAlive() {
+  const RENDER_URL = process.env.RENDER_EXTERNAL_URL || process.env.TELEGRAM_WEBHOOK_URL;
+  if (!RENDER_URL || process.env.NODE_ENV !== 'production') return;
+
+  const PING_INTERVAL = 4 * 60 * 1000; // 4 minutes
+  const healthUrl = `${RENDER_URL}/health`;
+
+  setInterval(() => {
+    const client = healthUrl.startsWith('https') ? https : http;
+    client.get(healthUrl, (res) => {
+      console.log(`💓 Keep-alive ping: ${res.statusCode}`);
+    }).on('error', (err) => {
+      console.warn(`⚠️  Keep-alive ping failed: ${err.message}`);
+    });
+  }, PING_INTERVAL);
+
+  console.log(`💓 Keep-alive enabled: pinging ${healthUrl} every 4 minutes`);
+}
+
 // Start server
 app.listen(PORT, () => {
   console.log(`✅ Server running on port ${PORT}`);
   console.log(`📍 Health check: http://localhost:${PORT}/health`);
   console.log(`📍 API endpoint: http://localhost:${PORT}/api/check-eligibility`);
+  console.log(`📍 Webhook: http://localhost:${PORT}/api/webhook/telegram`);
   console.log(`📍 RAG status: http://localhost:${PORT}/api/rag/status`);
   console.log('\n🚀 Ready to serve citizens!\n');
+
+  // Start keep-alive after server is listening
+  startKeepAlive();
 });
